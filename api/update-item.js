@@ -1,4 +1,4 @@
-import supabase from './lib/supabaseClient.js';
+import supabase from './lib/supabase.js';
 export const config = { api: { bodyParser: true } };
 
 export default async function handler(req, res) {
