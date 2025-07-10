@@ -32,12 +32,12 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    const supabase = supabase.createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_KEY
+    const supabase = window.supabase.createClient(
+      'https://peupxardkrcgosdfhzfw.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBldXB4YXJka3JjZ29zZGZoemZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE2OTk1NjMsImV4cCI6MjA2NzI3NTU2M30.sAv9ouFlirdNZ--M_NBYap51pcGGpXToW2JQ8DqmQVQ'
     );
 
-    const apiBase = 'https://coba-web-olive.vercel.app/vercel-api';
+    const apiBase = 'https://coba-web-olive.vercel.app/api';
 
     async function register() {
       const email = document.getElementById('reg-email').value;
