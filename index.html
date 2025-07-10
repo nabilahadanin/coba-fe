@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>CRUD + Auth | Supabase + Vercel + GitHub Pages</title>
+</head>
+<body>
+  <h1>CRUD Item</h1>
+
+  <div id="auth">
+    <h2>Registrasi</h2>
+    <input type="email" id="reg-email" placeholder="Email" />
+    <input type="password" id="reg-pass" placeholder="Password" />
+    <button onclick="register()">Daftar</button>
+
+    <h2>Login</h2>
+    <input type="email" id="login-email" placeholder="Email" />
+    <input type="password" id="login-pass" placeholder="Password" />
+    <button onclick="login()">Masuk</button>
+
+    <button onclick="logout()">Logout</button>
+    <div id="user-info"></div>
+  </div>
+
+  <div id="crud">
+    <h3>Tambah Item</h3>
+    <input type="text" id="item-name" placeholder="Nama item" />
+    <button onclick="addItem()">Tambah</button>
+
+    <ul id="item-list"></ul>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const supabase = window.supabase.createClient(
+      'https://peupxardkrcgosdfhzfw.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBldXB4YXJka3JjZ29zZGZoemZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE2OTk1NjMsImV4cCI6MjA2NzI3NTU2M30.sAv9ouFlirdNZ--M_NBYap51pcGGpXToW2JQ8DqmQVQ'
+    );
+
+    const apiBase = 'https://coba-web-olive.vercel.app/api';
+
+    async function register() {
+      const email = document.getElementById('reg-email').value;
+      const password = document.getElementById('reg-pass').value;
+      const { error } = await supabase.auth.signUp({ email, password });
+      alert(error ? 'Gagal: ' + error.message : 'Cek email untuk verifikasi');
+    }
+
+    async function login() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-pass').value;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) alert('Gagal login: ' + error.message);
+      else {
+        alert('Login berhasil');
+        showUser();
+        fetchItems();
+      }
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      alert('Logout berhasil');
+      document.getElementById('user-info').innerText = '';
+      document.getElementById('item-list').innerHTML = '';
+    }
+
+    async function showUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        document.getElementById('user-info').innerText = 'Login sebagai: ' + user.email;
+      }
+    }
+
+    async function fetchItems() {
+      fetch(`${apiBase}/get-items`)
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById('item-list');
+          list.innerHTML = '';
+          data.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <input value="${item.name}" id="input-${item.id}" />
+              <button onclick="updateItem(${item.id})">Update</button>
+              <button onclick="deleteItem(${item.id})">Hapus</button>
+            `;
+            list.appendChild(li);
+          });
+        });
+    }
+
+    function addItem() {
+      const name = document.getElementById('item-name').value;
+      fetch(`${apiBase}/add-item`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+      }).then(() => {
+        document.getElementById('item-name').value = '';
+        fetchItems();
+      });
+    }
+
+    function updateItem(id) {
+      const name = document.getElementById(`input-${id}`).value;
+      fetch(`${apiBase}/update-item?id=${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+      }).then(() => fetchItems());
+    }
+
+    function deleteItem(id) {
+      fetch(`${apiBase}/delete-item?id=${id}`, { method: 'DELETE' })
+        .then(() => fetchItems());
+    }
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        showUser();
+        fetchItems();
+      }
+    });
+  </script>
+</body>
+</html>
