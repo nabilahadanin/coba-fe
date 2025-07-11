@@ -13,6 +13,37 @@ async function login() {
   else window.location.href = 'index.html';
 }
 
+async function loginWithUsername() {
+  const username = document.getElementById('login-username').value;
+  const password = document.getElementById('login-pass').value;
+
+  // Cari email berdasarkan username
+  const { data, error } = await supabase
+    .from('players')
+    .select('email')
+    .eq('username', username)
+    .single();
+
+  if (error || !data?.email) {
+    return alert('Username tidak ditemukan');
+  }
+
+  const email = data.email;
+
+  // Lanjutkan login pakai email
+  const { error: loginError } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (loginError) {
+    alert('Login gagal: ' + loginError.message);
+  } else {
+    alert('Login berhasil!');
+    window.location.href = 'index.html';
+  }
+}
+
 async function logout() {
   await supabase.auth.signOut();
   alert('Logout berhasil');
