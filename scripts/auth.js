@@ -40,7 +40,7 @@ async function loginWithUsername() {
     alert('Login gagal: ' + loginError.message);
   } else {
     alert('Login berhasil!');
-    window.location.href = 'index.html';
+    window.location.href = 'pixel.html';
   }
 }
 

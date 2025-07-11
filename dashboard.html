@@ -1,0 +1,20 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard</title></head>
+<body>
+  <h1>Halo <span id="user-info"></span></h1>
+  <button onclick="logout()">Logout</button>
+
+  <h3>Tambah Item</h3>
+  <input type="text" id="item-name" placeholder="Nama item" />
+  <button onclick="addItem()">Tambah</button>
+
+  <ul id="item-list"></ul>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="scripts/supabaseClient.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/crud.js"></script>
+</body>
+</html>
