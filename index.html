@@ -1,113 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>theSAOnline</title>
+  <meta charset="UTF-8">
+  <title>Fullscreen Video Intro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Press Start 2P', sans-serif;
+        font-family: 'Press Start 2P', sans-serif;
       background: url('img/sao_bg.png') no-repeat center center;
       background-size: cover;
       height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 10px;
+      overflow: hidden;
     }
 
-    .logo {
+    #videoContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      max-width: 640px;
-      height: auto;
-      margin-bottom: 0px;
-      image-rendering: pixelated;
+      height: 100%;
+      display: none;
+      z-index: 999;
     }
 
-    .login-box {
-      background: rgba(173,216,230,0.85);
-      border: 4px solid #000;
-      padding: 30px 20px;
+    video {
       width: 100%;
-      max-width: 420px;
-      box-shadow: 0 0 15px #000;
-      border-radius: 12px;
-      text-align: center;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .login-box h1 {
-      font-size: 20px;
-      margin-bottom: 20px;
-      letter-spacing: 3px;
-    }
-
-    .input-field {
-      margin: 15px 0;
-      text-align: left;
-    }
-
-    .input-field label {
-      font-size: 10px;
-      margin-bottom: 5px;
-      display: block;
-    }
-
-    .input-field input {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      font-family: inherit;
-      border: 3px solid #000;
-      border-radius: 10px;
-      background: #fff;
-    }
-
-    .login-button {
+    #playBtn {
       margin-top: 25px;
       padding: 10px 30px;
       font-family: inherit;
-      font-size: 12px;
+      font-size: 50px;
       background: #ccc;
       border: 3px solid #000;
       border-radius: 10px;
       cursor: pointer;
     }
 
-    .login-button:hover {
+    #playBtn:hover {
       background: #aaa;
-    }
-
-    @media (max-width: 400px) {
-      .login-box h1 {
-        font-size: 16px;
-      }
-
-      .login-button {
-        width: 100%;
-      }
     }
   </style>
 </head>
 <body>
-  <img src="img/logo_sao.png" alt="SAO Logo" class="logo" />
 
-  <div class="login-box">
-    <h1>LOGIN</h1>
-    <div class="input-field">
-      <label for="login-username">User ID:</label>
-      <input type="text" id="login-username">
-    </div>
-    <div class="input-field">
-      <label for="login-pass">Password:</label>
-      <input type="password" id="login-pass">
-    </div>
-    <button class="login-button" onclick="loginWithUsername()">LINK START</button>
+  <button id="playBtn">Link Start</button>
+
+  <div id="videoContainer">
+    <video id="introVideo">
+      <source src="video/link-start.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="scripts/supabaseClient.js"></script>
-  <script src="scripts/auth.js"></script>
+
+  <script>
+    const playBtn = document.getElementById('playBtn');
+    const videoContainer = document.getElementById('videoContainer');
+    const video = document.getElementById('introVideo');
+
+    playBtn.addEventListener('click', () => {
+      playBtn.style.display = 'none';
+      videoContainer.style.display = 'block';
+      video.play();
+    });
+
+    // Setelah video selesai, redirect
+    video.addEventListener('ended', () => {
+      window.location.href = 'pixel.html'; 
+    });
+  </script>
+
 </body>
 </html>
