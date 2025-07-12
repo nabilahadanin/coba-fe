@@ -33,6 +33,15 @@
       object-fit: cover;
     }
 
+    @media (orientation: portrait) {
+      video {
+        transform: rotate(90deg) translateY(-100%);
+        transform-origin: center center;
+        width: 100vh;
+        height: 100vw;
+      }
+    }
+
     #playBtn {
       margin-top: 25px;
       padding: 10px 30px;
@@ -73,7 +82,7 @@
 
     // Setelah video selesai, redirect
     video.addEventListener('ended', () => {
-      window.location.href = 'pixel.html'; 
+      window.location.href = 'profile.html'; 
     });
   </script>
 
