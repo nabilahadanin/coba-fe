@@ -33,14 +33,19 @@
       object-fit: cover;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 768px) and (orientation: portrait) {
       video {
-        transform: rotate(90deg) translateY(-100%);
-        transform-origin: center center;
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100vh;
         height: 100vw;
+        transform: rotate(90deg) translateY(-100%);
+        transform-origin: top left;
+        object-fit: cover;
       }
     }
+
     #playBtn {
       margin-top: 25px;
       padding: 10px 30px;
