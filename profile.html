@@ -8,10 +8,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="profile.css">
 </head>
 <body>
+    <div id="loading-overlay">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
     <div id="navbar-placeholder" style="position: absolute; z-index: 999;"></div>
     <div class="main-container">
         <!-- <img src="logo_sao.png" alt="SAO Logo" class="logo" /> -->
@@ -19,14 +25,14 @@
         <div class="profile-card">
             <div class="info-section">
                 <div class="grid-container">
-                    <div class="item">🪙10000000</div>
-                    <div class="item">💎10000000</div>
+                    <div class="item">🪙<span id="player-col"></span></div>
+                    <div class="item">💎<span id="player-gems"></span></div>
                 </div>
                 <div class="avatar-section">
                     <img src="img/avatar.png" alt="avatar" class="avatar-img">
                 </div>
-                <div class="level">Lv.100</div>
-                <div class="name">ARJUNA_99</div>
+                <div class="level" id="player-level"></div>
+                <div class="name" id="player-name"></div>
             </div>
 
             <div>
@@ -34,26 +40,26 @@
                     <div class="stat-title">STATISTIC</div>
                     <div class="stat-row">
                         <span>TP:</span>
-                        <span>1,000,000</span>
+                        <span id="player-tp"></span>
                     </div>
                     <div class="stat-row">
                         <span>🗡️ Attack</span>
-                        <span>999</span>
+                        <span id="player-attack"></span>
                     </div>
                     <div class="stat-row">
                         <span>❤️ Max HP</span>
-                        <span>5000</span>
+                        <span id="player-maxhp"></span>
                     </div>
                     <div class="stat-row">
                         <span>🛡️ Defense</span>
-                        <span>800</span>
+                        <span id="player-defense"></span>
                     </div>
                     <div class="stat-row">
                         <span>🧪 Max MP</span>
-                        <span>3200</span>
+                        <span id="player-maxmp"></span>
                     </div>
                 </div>
-                <div class="box-pixel">SWORDS</div>
+                <div class="box-pixel">🗡️ <span id="player-weapon">SWORDS</span></div>
             </div>
             <div>
                 <div class="wequip-container">
@@ -78,6 +84,7 @@
             </div>
         </div>
     </div>
+    <script type="module" src="scripts/profilePage.js"></script>
     <script>
         fetch('navbar.html')
             .then(res => res.text())
@@ -92,6 +99,18 @@
                 menu.classList.toggle('active');
             });
         });
+
+        const overlay = document.getElementById('loading-overlay');
+
+        // Panggil fungsi ini setelah semua data dari Supabase sudah dimuat & ditampilkan
+        function hideLoadingOverlay() {
+            console.log("masuk sini");
+            overlay.classList.add('fade-out');
+
+            overlay.addEventListener('transitionend', () => {
+                overlay.style.display = 'none';
+            }, { once: true }); // agar tidak terpanggil berkali-kali
+        }
     </script>
 </body>
 </html>
