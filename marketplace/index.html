@@ -28,6 +28,9 @@
         <div class="nav-tab-wrapper d-flex justify-content-between align-items-center">
             <ul class="nav nav-tabs" id="marketTabs" role="tablist">
                 <li class="nav-item">
+                    <a class="nav-link-market" href="#" data-target="items-list" onclick="switchTab(event)">Items</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link-market active" href="#" data-target="weapons" onclick="switchTab(event)">Weapons</a>
                 </li>
                 <li class="nav-item">
@@ -38,7 +41,7 @@
                 <button class="btn btn-sm btn-success text-btn button-market">Buy</button>
                 <button class="btn btn-sm btn-danger text-btn button-market">Cancel</button>
                 <button class="btn btn-sm btn-info text-btn button-market">My Storage</button>
-                <button class="btn btn-sm btn-cart" style="background-color: #362f2c;"><i class="bi bi-cart button-market"></i></button>
+                <button class="btn btn-sm btn-cart" style="background-color: #362f2c;" onclick="openPopup()"><i class="bi bi-cart button-market"></i></button>
             </div>
         </div>
         <div class="tab-content" id="marketTabsContent">
@@ -374,7 +377,45 @@
                 <h4>EQUIPMENTS</h4>
                 <p>List of equipments available in the marketplace.</p>
             </div>
+            <div class="tab-pane" id="items-list">
+                <h4>ITEMS</h4>
+                <p>List of items available in the marketplace.</p>
+            </div>
             <img src="../assets/img/icon-scroll-down.png" class="scroll-arrow" id="scrollArrow" alt="scroll indicator" />
+        </div>
+    </div>
+    <!-- Pop Up Keranjang -->
+    <div class="popup" id="myPopup">
+        <div class="popup-content">
+            <div class="popup-title" style="padding-bottom: 10px; font-size: 20px;">YOUR CART</div>
+            <div class="cart-list">
+                <div class="wequip-box">
+                    <div class="photo-info">
+                        <div class="item-photo">
+                            <!-- foto itemnya -->
+                                <img src="../assets/img/eq-1.png" class="photo-item">
+                        </div>
+                    </div>
+                    <div class="desc-item">
+                        <div class="item-name">Double-Edge Swords</div>
+                        <div class="item-max">20,000</div>
+                        <div class="cost-add">
+                            <div class="cost-item"><span>Price:</span></div>
+                            <div class="add-btn"> 
+                                <a>200,000</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                Total = 600,000
+            </div>
+            <div>
+                <button>Buy</button>
+                <button>Cancel</button>
+            </div>
+            <button class="close-btn" onclick="closePopup()">Close</button>
         </div>
     </div>
   </div>
@@ -441,6 +482,14 @@
         behavior: 'smooth' // animasi smooth
         });
     });
+
+    function openPopup() {
+        document.getElementById('myPopup').style.display = 'flex';
+    }
+
+    function closePopup() {
+        document.getElementById('myPopup').style.display = 'none';
+    }
   </script>
 </body>
 </html>
