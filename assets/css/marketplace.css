@@ -1,6 +1,10 @@
+html, body {
+    height: 100vh;
+    overflow: hidden;
+}
 body {
     margin: 0;
-    background-image: url("img/eidolon.png");
+    background-image: url("../img/eidolon.png");
     background-repeat: no-repeat;
     background-size: cover;
     font-family: 'Press Start 2P', cursive;
@@ -78,8 +82,19 @@ body {
   padding: 10px 20px;
   border-radius: 30px;
   overflow-y: auto;
-  height: 460px;
+  height: 70vh;
 }
+
+.scroll-arrow {
+  position: absolute;
+  bottom: 5px; /* muncul sedikit di bawah border */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 35px;  /* atur sesuai ukuran image */
+  height: auto;
+  z-index: 1;
+}
+
 .tab-pane {
   display: none;
 }
@@ -190,6 +205,11 @@ body {
     border-radius: 10px;
     color: #362f2c;
 }
+
+.button-market{
+    color: white !important; 
+    font-size: 20px !important;
+}
 @media (max-width: 768px) {
     .container {
         margin: 10px 10px;
@@ -198,8 +218,9 @@ body {
 
     .top-container {
         flex-direction: column;
-        gap: 15px;
+        gap: 5px;
         text-align: center;
+        margin-right: 10px;
     }
 
     .info-player {
@@ -216,16 +237,27 @@ body {
         font-size: 12px;
     }
 
+    .nav-tab-wrapper {
+        display: block !important;
+    }
+
     .nav-tabs {
         gap: 5px;
         margin-left: 0;
         align-items: center;
+        margin-bottom: 5px;
+        justify-content: center;
     }
 
     .nav-link-market {
         text-align: center;
         font-size: 12px;
         padding: 8px;
+    }
+    
+    .tab-content {
+        margin-right: 10px;
+        height: 48vh;
     }
 
     .wequip-list {
@@ -275,5 +307,17 @@ body {
     .cost-item {
         padding: 2px;
         font-size: 10px;
+    }
+
+    .right-buttons{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+
+    .button-market{
+        color: white !important; 
+        font-size: 10px !important;
     }
 }
